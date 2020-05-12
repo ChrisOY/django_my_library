@@ -1,0 +1,88 @@
+<!-- cat_temp/base.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% block title %}<title>My Local Library</title>{% endblock %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <!-- Add additional CSS in static file -->
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'cat_css/styles.css' %}">
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-2">
+            {% block sidebar %}
+
+            <ul class="sidebar-nav">
+                <li><a href="{% url 'index-url' %}">Home</a></li>
+                <li><a href="{% url 'books-url' %}">All books</a></li>
+                <li><a href="{% url 'authors-url' %}">All authors</a></li>
+            </ul>
+
+            {# // user login section // #}
+            <ul class="sidebar-nav">
+            {% if user.is_authenticated %}
+                <li>User: {{user.get_username}}</li>
+                <li><a href="{% url 'my-loan-url' %}">My Borrowed</a></li>
+                <li><a href="{% url 'logout' %}?next={{request.path}}">Logout</a></li>
+            {% else %}
+                <li><a href="{% url 'login' %}?next={{request.path}}">Login</a></li>
+            {% endif %}
+            </ul>
+
+            {# // show this section for staff ONLY // #}
+            {% if user.is_staff %}
+            <hr />
+            <ul class="sidebar-nav">
+                <li>Staff</li>
+                {% if perms.catalog.can_mark_returned %}
+                <li><a href="{% url 'all-loan-url' %}">All Borrowed</a></li>
+                {% endif %}
+            </ul>
+            {% endif %}
+
+            {% endblock sidebar %}
+            </div>
+
+            <div class="col-sm-10">
+            {% block content %}
+            <!-- // for different html to put it's contents // -->
+            {% endblock content %}
+
+            <!-- //for contents with pages // -->
+            {% block pagination %}
+            {% if is_paginated %}
+                <div class="pagination">
+                    <span class="page-links">
+                        {# // (1) previous page // #}
+                        {% if page_obj.has_previous %}
+                            <a href="
+                            {{request.path}}?page={{page_obj.previous_page_number}}
+                            ">previous</a>
+                        {% else %} Begin
+                        {% endif %}
+                        {# // (2) current page // #}
+                        <span class="page-current">
+                            &#60;&#60;&#60; Page {{page_obj.number}} of
+                             {{page_obj.paginator.num_pages}} &#62;&#62;&#62;
+                        </span>
+                        {# // (3) next page // #}
+                        {% if page_obj.has_next %}
+                            <a href="
+                            {{request.path}}?page={{page_obj.next_page_number}}
+                            ">next</a>
+                        {% else %} End
+                        {% endif %}
+                    </span>
+                </div>
+            {% endif %}
+            {% endblock pagination %}    
+            </div>
+
+        </div>
+    </div>
+</body>
+</html>

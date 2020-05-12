@@ -1,0 +1,16 @@
+<!-- //p9> cat_temp/form_book.html -->
+{% extends "cat_temp/base.html" %}
+
+{% block content %}
+<h1>Book Editing</h1>
+<p>To add or update book info</p>
+<hr>
+<form action="" method="POST">
+    {% csrf_token %}
+    <table>
+        {{form.as_table}}
+    </table>
+    <br>
+    <input type="submit" value="Submit">
+</form>
+{% endblock content %}

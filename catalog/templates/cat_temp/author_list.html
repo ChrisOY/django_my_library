@@ -1,0 +1,19 @@
+<!-- cat_temp/author_list.html -->
+{% extends "cat_temp/base.html" %}
+
+{% block content %}
+<h1>List of {{page_obj.paginator.count}} Authors</h1>
+{% if my_author_list %}
+<ul>
+    {% for author in my_author_list %}
+    <li>
+        <a href="{{ author.get_absolute_url }}">
+            {{author.last_name}}, {{author.first_name}}
+        </a> ({{author.date_of_birth}} - {{author.date_of_death}})
+    </li>
+    {% endfor %}
+</ul>
+{% else %}
+<p>There are no auch author in the library</p>
+{% endif %}
+{% endblock content %}

@@ -1,0 +1,23 @@
+<!-- cat_temp/book_list.html -->
+{% extends "cat_temp/base.html" %}
+
+{% block content %}
+<h1>List of {{page_obj.paginator.count}} Books</h1>
+{% if my_book_list %}
+<ul>
+    {% for book in my_book_list %}
+    <li>
+        <a href="{{ book.get_absolute_url }}">{{book.title}}</a> 
+        ({{book.display_all_authors}})
+        <!-- only first 3 author last_name => ({{book.display_author}}) -->
+        <!-- 1book-1author only => ({{book.author}}) -->
+    </li>
+    {% endfor %}
+</ul>
+{% else %}
+<p>There are no books in the library</p>
+{% endif %}
+{% endblock content %}
+
+
+

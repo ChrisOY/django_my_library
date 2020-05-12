@@ -1,0 +1,18 @@
+/* catalog/static/cat_css/styles.css */
+.sidebar-nav {
+    margin-top: 20px;
+    padding: 0;
+    list-style: none;
+}
+
+/* OY style */
+/* //=> Not Working
+hr.new5 {
+    border: 10px solid green;
+    border-radius: 5px;
+} */
+/* //=> Not Working
+.hr-green10 {
+    border: 10px solid green;
+    border-radius: 5px;
+} */

@@ -1,0 +1,18 @@
+<!-- cat_temp/user_loan.html -->
+{% extends "cat_temp/base.html" %}
+
+{% block content %}
+<h1>My Borrowed Books</h1>
+{% if loan_books %}
+<ul>
+    {% for bookinst in loan_books %}
+    <li class="{% if bookinst.is_overdue %}text-danger{% endif %}">
+        <a href="{% url 'book-detail-url' bookinst.book.pk%}">{{bookinst.book.title}}</a> 
+        ({{bookinst.due_back}})    
+    </li>
+    {% endfor %}
+</ul>
+{% else %}
+<p>There are no books borrowed.</p>
+{% endif %}
+{% endblock content %}

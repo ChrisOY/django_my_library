@@ -1,0 +1,42 @@
+<!-- cat_temp/book_detail.html -->
+{% extends "cat_temp/base.html" %}
+{% block content %}
+<h1>Title: {{select_book.title}}</h1>
+
+<p><strong>{% if select_book.author.count == 1 %}Author:{% else %}Authors:{% endif %}</strong> 
+{% for author in select_book.author.all %}
+    {% if forloop.last %} 
+    <a href="{{author.get_absolute_url}}">{{author.first_name}} {{author.last_name}}</a>
+    {% else %} 
+    <a href="{{author.get_absolute_url}}">{{author.first_name}} {{author.last_name}}, </a>
+    {% endif %} 
+{% endfor %}
+</p>
+<!-- // only show authors without link // -->
+<!-- <p>Authors: {% for author in select_book.display_all_authors %}<a href="{{author.get_absolute_url}}">{{author}}</a>{% endfor %}</p> -->
+
+<p><strong>Summary:</strong>{{select_book.summary}}</p>
+<p><strong>ISBN:</strong>{{select_book.isbn}}</p>
+<p><strong>Language:</strong>{{select_book.language}}</p>
+<p><strong>Genre:</strong>{{select_book.genre.all|join:", "}}</p>
+
+<div style="margin-left:20px;margin-top:20px;">
+    <h4>{{ select_book.bookinstance_set.count }}
+    {% if select_book.bookinstance_set.count == 1 %} Copy
+    {% else %} Copies {% endif %}</h4>
+
+    {% for copy in select_book.bookinstance_set.all %}
+        <hr>
+        <p class="{% if copy.status == 'a' %}text-success
+        {% elif copy.status == 'm' %}text-danger
+        {% else %}text-warning{% endif %}">
+        {{copy.get_status_display}}
+        </p>
+        {% if copy.status != 'a' %}
+        <p><strong>Due to be returned:</strong> {{copy.due_back}}</p>
+        {% endif %}
+        <p><strong>Imprint:</strong> {{copy.imprint}}</p>
+        <p class="text-muted"><strong>Id:</strong> {{copy.id}}</p>
+    {% endfor %}
+</div>
+{% endblock content %}

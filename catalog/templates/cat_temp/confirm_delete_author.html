@@ -1,0 +1,12 @@
+<!-- //p9> cat_temp/confirm_delete_author.html -->
+{% extends "cat_temp/base.html" %}
+
+{% block content %}
+<h1>Delete Author</h1>
+<p>Are you sure your want to delete the author: {{author}}?</p>
+<hr>
+<form action="" method="POST">
+    {% csrf_token %}
+    <input type="submit" value="Yes, delete.">
+</form>
+{% endblock content %}

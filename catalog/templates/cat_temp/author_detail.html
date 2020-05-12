@@ -1,0 +1,27 @@
+<!-- catalog/templates/cat_temp/author_detail.html -->
+{% extends "cat_temp/base.html" %}
+
+{% block content %}
+    <h1>Author: {{select_author.first_name}} {{select_author.last_name}}</h1>
+    <p>{{select_author.date_of_birth}} - {{select_author.date_of_death}}</p>
+    <div style="margin-left:20px; margin-top:20px">
+        <h4>Collection: {{ select_author.book_set.all.count }}
+            {% if select_author.book_set.all.count == 1 %} Book
+            {% else %} Books
+            {% endif %}
+        </h4>
+        {% for book in select_author.book_set.all %}
+            <hr>
+            <p><strong>
+                <a href="{% url 'book-detail-url' book.pk %}">
+                    {{book.title}}
+                </a></strong>
+            ({{book.bookinstance_set.all.count}} 
+            {% if book.bookinstance_set.all.count == 1 %} copy)
+            {% else %} copies)
+            {% endif %}
+            </p>
+            <p>{{ book.summary }}</p>
+        {% endfor %}
+    </div>
+{% endblock %}

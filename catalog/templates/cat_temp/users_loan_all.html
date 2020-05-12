@@ -1,0 +1,21 @@
+<!-- cat_temp/users_loan_all.html -->
+{% extends "cat_temp/base.html" %}
+
+{% block content %}
+<h1>All Borrowed {{page_obj.paginator.count}} Books</h1>
+{% if loan_books %}
+<ul>
+    {% for bookinst in loan_books %}
+    <li class="{% if bookinst.is_overdue %}text-danger{% endif %}">
+        <a href="{% url 'book-detail-url' bookinst.book.pk%}">{{bookinst.book.title}}</a> 
+        ({{bookinst.due_back}}) - {{bookinst.borrower}}
+        {% if bookinst.is_overdue and perms.catalog.can_mark_returned %}
+            <a href="{% url 'renew-book-url' bookinst.id %}"> >>> Renew</a>
+        {% endif %}
+    </li>
+    {% endfor %}
+</ul>
+{% else %}
+<p>There are no books borrowed.</p>
+{% endif %}
+{% endblock content %}
