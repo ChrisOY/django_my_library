@@ -8,3 +8,5 @@ This is a changing point for branch, readme-edits
 > Now, put the comment into branch.
 > After commit my change, will pull a request.
 
+Note200513-2: Can also directly edit to "master". Be hold, it might be dangerous...
+
