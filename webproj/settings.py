@@ -31,8 +31,10 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'jb(s9wbxe(6*b_*j6)$hpro9zfl=_&
 DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
 
 
-
-ALLOWED_HOSTS = []
+# ALLOWED_HOSTS = []
+# //11b> Heroku Required from other suggestion
+# ALLOWED_HOSTS = ['localhost', '127.0.0.1', '[::1]']
+ALLOWED_HOSTS = ['web-gitlib.herokuapp.com']
 
 
 # Application definition
