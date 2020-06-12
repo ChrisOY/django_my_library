@@ -34,7 +34,12 @@ DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
 # ALLOWED_HOSTS = []
 # //11b> Heroku Required from other suggestion
 # ALLOWED_HOSTS = ['localhost', '127.0.0.1', '[::1]']
-ALLOWED_HOSTS = ['web-gitlib.herokuapp.com']
+#// p11b-1> heroku host from solution
+# ALLOWED_HOSTS = ['web-gitlib.herokuapp.com']
+#//p11b-2> after~~> heroku config:set
+#// DJANGO_SECRET_KEY & DJANGO_DEBUG
+#// it request to change with local host too
+ALLOWED_HOSTS = ['web-gitlib.herokuapp.com', '127.0.0.1']
 
 
 # Application definition
